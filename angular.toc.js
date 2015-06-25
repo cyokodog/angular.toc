@@ -18,6 +18,7 @@
       },
       controller: controller
     }
+    controller.$inject = ['$compile'];
     function controller($compile){
       this.init = function(scope, el, attr){
         var headingArray = TOC.createHeadingArray(
