@@ -18,7 +18,7 @@
       },
       controller: controller
     }
-    function controller($compile, mdService){
+    function controller($compile){
       this.init = function(scope, el, attr){
         var headingArray = TOC.createHeadingArray(
           angular.element(scope.startHeadingElement)[0],
