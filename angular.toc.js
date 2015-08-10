@@ -11,7 +11,8 @@
       scope: {
         startHeadingElement: '@',
         fromHeadingLevel: '@',
-        toHeadingLevel: '@'
+        toHeadingLevel: '@',
+        onFilter: '&'
       },
       link: function(scope, el, attr, vm){
         vm.init(scope, el, attr);
@@ -22,14 +23,18 @@
     function controller($compile){
       this.init = function(scope, el, attr){
         var headingArray = TOC.createHeadingArray(
-          angular.element(scope.startHeadingElement)[0],
+          document.querySelector(scope.startHeadingElement),
           scope.fromHeadingLevel,
           scope.toHeadingLevel
         )
+        headingArray = headingArray.filter(function(heading){
+          var ret = scope.onFilter({heading: heading});
+          return ret == undefined || ret;
+        });
         if(headingArray){
           TOC.addRelationShip(headingArray);
           var toc = TOC.toTocUi(headingArray);
-          el.html(toc)
+          el.append(toc);
         }
       }
     }
